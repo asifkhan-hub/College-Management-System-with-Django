@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Classes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f4f8;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 50px auto;
+            max-width: 800px;
+        }
+
+        h2 {
+            color: #536878;
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        h3 {
+            color: #536878;
+            font-size: 24px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #4e9cff;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: #007bff;
+        }
+        
+        /* Enhanced UI styles */
+        .class-list {
+            border-top: 2px solid #007bff;
+            padding-top: 20px;
+        }
+        
+        .class-list li {
+            background-color: #f0f4f8;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        
+        .class-list li:hover {
+            background-color: #e1e8ed;
+        }
+        
+        .class-details {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .class-time {
+            font-size: 14px;
+            color: #777;
+        }
+        
+        .class-list h3 {
+            margin-bottom: 10px;
+            color: #536878;
+        }
+        
+        /* Additional styling */
+        .class-list li {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .class-list li:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            background-color: #f0f8ff;
+        }
+        
+        .class-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .class-details h3 {
+            margin: 0;
+            font-size: 20px;
+            color: #333;
+        }
+        
+        .class-time {
+            font-size: 14px;
+            color: #777;
+        }
+        
+        .class-action a {
+            padding: 8px 12px;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        
+        .class-action a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Online Classes</h2>
+
+        <h3>Attended Classes</h3>
+        <ul class="class-list">
+            {% for online_class in attended_classes %}
+                <li>
+                    <div class="class-details">
+                        <h3>{{ online_class.subject.name }}</h3>
+                        <span class="class-time">{{ online_class.date }} {{ online_class.start_time }} - {{ online_class.end_time }}</span>
+                    </div>
+                    <div class="class-action">
+                        <a href="{% url 'online_class_detail' online_class.pk %}">Details</a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <h3>Upcoming Classes</h3>
+        <ul class="class-list">
+            {% for online_class in upcoming_classes %}
+                <li>
+                    <div class="class-details">
+                        <h3>{{ online_class.subject.name }}</h3>
+                        <span class="class-time">{{ online_class.date }} {{ online_class.start_time }} - {{ online_class.end_time }}</span>
+                    </div>
+                    <div class="class-action">
+                        <a href="{% url 'online_class_detail' online_class.pk %}">Details</a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

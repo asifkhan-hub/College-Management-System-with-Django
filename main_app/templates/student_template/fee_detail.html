@@ -1,0 +1,72 @@
+<!-- student_template/fee_detail.html -->
+
+  <style>
+    /* Custom styles for the fee detail page */
+    .fee-detail-heading {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .table-responsive {
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .table {
+      border-collapse: separate;
+      border-spacing: 0 10px;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .table th {
+      background-color: #f5f5f5;
+      font-weight: 600;
+    }
+
+    .table td,
+    .table th {
+      padding: 12px 15px;
+      text-align: left;
+    }
+
+    .badge-paid {
+      background-color: #28a745;
+    }
+
+    .badge-pending {
+      background-color: #ffc107;
+    }
+  </style>
+
+  <h2 class="fee-detail-heading">Your Fee Details</h2>
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead class="thead-light">
+        <tr>
+          <th>Date Paid</th>
+          <th>Amount</th>
+          <th>Payment Method</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for fee in fees %}
+          <tr>
+            <td>{{ fee.date_paid }}</td>
+            <td>${{ fee.amount }}</td>
+            <td>{{ fee.payment_method }}</td>
+            <td>
+              {% if fee.is_paid %}
+                <span class="badge badge-paid">Paid</span>
+              {% else %}
+                <span class="badge badge-pending">Pending</span>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>

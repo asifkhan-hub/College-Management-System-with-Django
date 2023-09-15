@@ -1,0 +1,7 @@
+
+  <h1>Online Classes</h1>
+  <ul>
+    {% for online_class in classes %}
+      <li><a href="{% url 'class_detail' online_class.id %}">{{ online_class.title }}</a></li>
+    {% endfor %}
+  </ul>

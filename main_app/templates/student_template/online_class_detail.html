@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Class Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f4f8;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 50px auto;
+            max-width: 800px;
+        }
+
+        h2 {
+            color: #536878;
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 18px;
+            color: #536878;
+            margin: 10px 0;
+        }
+
+        strong {
+            font-weight: bold;
+        }
+
+        .duration-bar {
+            background-color: #d8e2ef;
+            height: 10px;
+            border-radius: 5px;
+            margin-top: 15px;
+            overflow: hidden;
+        }
+
+        .duration-progress {
+            background-color: #4e9cff;
+            height: 100%;
+            border-radius: 5px;
+            width: 0;
+        }
+
+        h3 {
+            color: #536878;
+            font-size: 28px;
+            margin-top: 25px;
+        }
+
+        video {
+            border-radius: 10px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+            margin-top: 15px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Unveiling the Odyssey of Online Learning</h2>
+        <p><strong>Subject:</strong> {{ online_class.subject.name }}</p>
+        <p><strong>Instructor:</strong> {{ online_class.staff.admin.first_name }} {{ online_class.staff.admin.last_name }}</p>
+        <p><strong>Date:</strong> {{ online_class.date }}</p>
+        <p><strong>Time:</strong> {{ online_class.start_time }} - {{ online_class.end_time }}</p>
+        <p><strong>Duration:</strong> {{ online_class.duration }}</p>
+        
+        <div class="duration-bar">
+            <div class="duration-progress" id="duration-progress"></div>
+        </div>
+        
+        <h3>Embark on a Visual Expedition</h3>
+        <video controls>
+            <source src="{{ online_class.video.url }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <script>
+        // JavaScript code to update the duration bar based on time
+        const startTime = new Date("{{ online_class.start_time }}");
+        const endTime = new Date("{{ online_class.end_time }}");
+        const currentTime = new Date();
+
+        const totalDuration = endTime - startTime;
+        const elapsedTime = currentTime - startTime;
+        const progressPercentage = (elapsedTime / totalDuration) * 100;
+
+        const durationProgress = document.getElementById("duration-progress");
+        durationProgress.style.width = `${progressPercentage}%`;
+    </script>
+</body>
+</html>

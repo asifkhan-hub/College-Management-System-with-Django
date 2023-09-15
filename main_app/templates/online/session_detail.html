@@ -1,0 +1,17 @@
+
+  <h1>Session Details</h1>
+  <p><strong>Start Time:</strong> {{ session.start_time }}</p>
+  <p><strong>End Time:</strong> {{ session.end_time }}</p>
+  <p><strong>Video Conference Link:</strong> <a href="{{ session.video_conference_link }}" target="_blank">{{ session.video_conference_link }}</a></p>
+
+  <h2>Attendees</h2>
+  <ul>
+    {% for attendee in attendees %}
+      <li>{{ attendee.user.username }} {% if attendee.attended %}(Attended){% endif %}</li>
+    {% endfor %}
+  </ul>
+
+  <form method="post" action="{% url 'attend_session' session.id %}">
+    {% csrf_token %}
+    <button type="submit">Mark Attendance</button>
+  </form>

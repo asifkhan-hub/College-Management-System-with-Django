@@ -1,0 +1,9 @@
+<h1>{{ online_class.title }}</h1>
+<p>{{ online_class.description }}</p>
+
+<h2>Sessions</h2>
+<ul>
+  {% for session in sessions %}
+    <li><a href="{% url 'session_detail' session.id %}">{{ session.title }} what are </a></li>
+  {% endfor %}
+</ul>

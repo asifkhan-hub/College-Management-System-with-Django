@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Paid Fees</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .card {
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #27ae60;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background-color: #ffffff;
+            border-radius: 10px;
+            margin: 10px 0;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.2s ease-in-out;
+        }
+        li:hover {
+            background-color: #f9f9f9;
+        }
+        .student-name {
+            font-weight: bold;
+        }
+        .fee-amount {
+            color: #2c3e50;
+        }
+
+        /* Styles for buttons */
+        .chart-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .chart-button {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .delete-button {
+            background-color: #e74c3c;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Paid Fees</h1>
+        <ul>
+            {% for fee in paid_fees %}
+                <li>
+                    <span class="student-name">{{ fee.student.admin.first_name }} {{ fee.student.admin.last_name }}</span>
+                    <span class="fee-amount">$ {{ fee.amount }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+        
+        <!-- Add a card for the pie chart -->
+        <div class="card">
+            <div class="chart-buttons">
+                <button class="chart-button" id="toggleChart">Minimize</button>
+                <button class="chart-button delete-button" id="deleteChart">Delete Chart</button>
+            </div>
+            <canvas id="paidFeesChart" width="100%" height="400"></canvas>
+        </div>
+    </div>
+    
+    <script>
+        var paidFeesCanvas = document.getElementById("paidFeesChart");
+        var paidFeesData = [
+            {% for fee in paid_fees %}
+                {{ fee.amount }},
+            {% endfor %}
+        ];
+
+        var paidFeesChart = new Chart(paidFeesCanvas, {
+            type: "pie",
+            data: {
+                labels: [
+                    {% for fee in paid_fees %}
+                        "{{ fee.student.admin.first_name }} {{ fee.student.admin.last_name }}",
+                    {% endfor %}
+                ],
+                datasets: [{
+                    data: paidFeesData,
+                    backgroundColor: [
+                        "#2ecc71",
+                        "#3498db",
+                        "#e74c3c",
+                        // ... Add more colors as needed ...
+                    ],
+                }],
+            },
+            options: {
+                responsive: true,
+            },
+        });
+
+        // Toggle chart visibility and change button text
+        document.getElementById("toggleChart").addEventListener("click", function () {
+            var chartContainer = document.getElementById("paidFeesChart");
+            if (chartContainer.style.display === "none") {
+                chartContainer.style.display = "block";
+                this.textContent = "Minimize";
+            } else {
+                chartContainer.style.display = "none";
+                this.textContent = "Maximize";
+            }
+        });
+
+        // Delete the chart
+        document.getElementById("deleteChart").addEventListener("click", function () {
+            var chartContainer = document.getElementById("paidFeesChart");
+            chartContainer.remove();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Student Fee</title>
+</head>
+<body>
+    <h1>Update Student Fee for {{ student.admin.first_name }} {{ student.admin.last_name }}</h1>
+    
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Update Fee</button>
+    </form>
+    
+    <a href="{% url 'student_detail' student_id=student.id %}">Back to Student Detail</a>
+</body>
+</html>
