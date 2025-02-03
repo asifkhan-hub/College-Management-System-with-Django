@@ -1,2 +1,2 @@
-# Django_stm
-Django School management with online class features
+# College Management System with Django
+College Management System with Django online class features
